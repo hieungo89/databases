@@ -29,14 +29,16 @@ describe('Persistent Node Chat Server', () => {
   });
 
   it('Should insert posted messages to the DB', (done) => {
-    const username = 'Valjean';
+    // console.log('mysql2 = ', mysql);
+    // console.log('dbConnection = ', dbConnection.query)
+    const user_id = 'Valjean';
     const message = 'In mercy\'s name, three days is all I need.';
     const roomname = 'Hello';
     // Create a user on the chat server database.
-    axios.post(`${API_URL}/users`, { username })
+    axios.post(`${API_URL}/users`, { user_id })
       .then(() => {
         // Post a message to the node chat server:
-        return axios.post(`${API_URL}/messages`, { username, message, roomname });
+        return axios.post(`${API_URL}/messages`, { user_id, message, roomname });
       })
       .then(() => {
         // Now if we look in the database, we should find the posted message there.
@@ -65,7 +67,7 @@ describe('Persistent Node Chat Server', () => {
 
   it('Should output all messages from the DB', (done) => {
     // Let's insert a message into the db
-       const queryString = 'INSERT INTO messages (username, message, roomname) VALUES("DARTHVADER", "I am your father", "DeathStar")';
+       const queryString = 'INSERT INTO messages (user_id, message, roomname) VALUES("01", "I am your father", "lobby")';
        const queryArgs = [];
     /* TODO: The exact query string and query args to use here
      * depend on the schema you design, so I'll leave them up to you. */
